@@ -225,19 +225,96 @@ export default function Tables({ columns, data, name }) {
       </>
     );
   }
+  function EditSchemeCommissionRate({ data, name }) {
+    const [show, setShow] = useState(false);
+    var hiddencols = [{Header:"Month 1",name:"m1",value:""}, {Header:"Month 2",name:"m2",value:""}, {Header:"Month 3",name:"m3",value:""}, {Header:"Month 4",name:"m4",value:""}, {Header:"Month 5",name:"m5",value:""}, {Header:"Month 6",name:"m6",value:""}, {Header:"Month 7",name:"m7",value:""}, {Header:"Month 8",name:"m8",value:""}, {Header:"Month 9",name:"m9",value:""}, {Header:"Month 10",name:"m10",value:""}, {Header:"Month 11",name:"m11",value:""}, {Header:"Month 12",name:"m12",value:""}];
+    var disabledInput = [
+      "userid",
+      "idSchemes",
+      "idGroups",
+      "idTaxes",
+      "idNotifications",
+      "taxName",
+      "startDate",
+      "endDate",
+      "createdAt",
+      "fullname",
+      "schemeName",
+      "groupName",
+    ];
+    return (
+      <>
+        <i
+          style={{ marginLeft: "5px" }}
+          className="far fa-edit EditSchemeCommissionRate"
+          onClick={() => setShow(true)}
+        ></i>
 
+        <Modal
+          show={show}
+          onHide={() => setShow(false)}
+          dialogClassName="modal-90w"
+          aria-labelledby="example-custom-modal-styling-title"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-custom-modal-styling-title">
+              Edit Commission Rate
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <>
+              <form>                
+                {Object.entries(hiddencols).map(([key, value]) => (
+                  <div className="row" style={{ paddingTop: "10px" }}>
+                    {console.log("key",key)}
+                    {console.log("value",value['Header'])}
+                    <div className="col-sm-4 col-md-4">
+                      <label>{value['Header']}</label>{" "}
+                    </div>
+                    <div className="col-sm-8 col-md-8">
+                      {key !== "status" &&
+                        key !== "notificationType" &&
+                        key !== "medium" &&
+                        key !== "exclusive_inclusive" &&
+                        key !== "taxType" && (
+                          
+                          <input
+                            className="form-control"
+                            defaultValue={data[value['name']]}
+                            onChange={(e) => {
+                              data[value['name']] = e.target.value;
+                            }}
+                            p={console.log("value122",data)}
+                            disabled={
+                              disabledInput.includes(key) ? true : false
+                            }
+                          />
+                        )}
+                    </div>
+                  </div>
+                ))}
+                <div className="row">
+                <input className="form-control" type="hidden" defaultValue={data['idSchemes']}/>
+                  <button
+                    style={{ marginTop: "15px" }}
+                    className="btn btn-secondary"
+                    onClick={(e) => {
+                      HandleEditCommissionRate(e, name, data, data['idSchemes']);
+                    }}
+                  >
+                    Apply
+                  </button>
+                </div>
+              </form>
+            </>
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  }
   const HandleEdit = async (e, name, data) => {
     e.preventDefault();
-    if (name === "User Verification") {
-      await axios
-        .post("/api/editCompanyUser", {
-          data: data,
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
-      window.location.reload();
-    }
+
     if (name === "Schemes") {
       await axios
         .post("/api/editScheme", {
@@ -248,10 +325,13 @@ export default function Tables({ columns, data, name }) {
         });
       window.location.reload();
     }
+  };
+  const HandleEditCommissionRate = async (e, name, data,id) => {
+    e.preventDefault();
 
-    if (name === "Group") {
+    if (name === "Schemes") {
       await axios
-        .post("/api/editGroup", {
+        .post("/api/editSchemeCommissionRate", {
           data: data,
         })
         .then((response) => {
@@ -259,30 +339,12 @@ export default function Tables({ columns, data, name }) {
         });
       window.location.reload();
     }
-    if (name === "Taxes") {
-      await axios
-        .post("/api/editTax", {
-          data: data,
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
-      window.location.reload();
-    }
-    if (name === "Notification") {
-      await axios
-        .post("/api/editNotification", {
-          data: data,
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
-      window.location.reload();
-    }
+
   };
 
   const DeleteData = async (name, data) => {
     if (name === "User Verification") {
+      
       await axios
         .post("/api/deleteCompanyUser", {
           userid: data.userid,
@@ -293,7 +355,9 @@ export default function Tables({ columns, data, name }) {
       window.location.reload();
     }
     if (name === "Schemes") {
-      await axios
+      if(localStorage.getItem('role_id') === '3')
+      {
+        await axios
         .post("/api/deleteScheme", {
           idSchemes: data.idSchemes,
         })
@@ -301,7 +365,27 @@ export default function Tables({ columns, data, name }) {
           console.log(response.data);
         });
       window.location.reload();
-    }
+    }else if (localStorage.getItem('role_id') === '1')
+    {
+      await axios
+      .post("/api/deleteSchemeForUser", {
+        users_id:localStorage.getItem('userid'),idSchemes: data.idSchemes,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+    window.location.reload();
+  }else if (localStorage.getItem('role_id') === '2')
+  {
+    await axios
+    .post("/api/deleteScheme", {
+      idSchemes: data.idSchemes,
+    })
+    .then((response) => {
+      console.log(response.data);
+    });
+  window.location.reload();
+}}
 
     if (name === "Group") {
       await axios
@@ -395,11 +479,11 @@ export default function Tables({ columns, data, name }) {
                   <div className="row" style={{ minInlineSize: "max-content" }}>
                     <div className="col-sm-12 col-md-12">
                       <ViewDataModal data={row.values} name={name} />
-                      <EditDataModal data={row.values} name={name} />
-                      <i
-                        style={{ marginLeft: "5px" }}
-                        className="far fa-trash-alt"
-                        onClick={(e) => {
+                      {(localStorage.getItem('role_id') === '3'||localStorage.getItem('role_id') === '2' )?(<EditDataModal data={row.values} name={name} />):(' ')}
+                      
+                      {(localStorage.getItem('role_id') === '2' && name === "Schemes")?
+                      (<EditSchemeCommissionRate data={row.original} name={name} p={console.log('rowv',row.original)}/>):(' ')}
+                      <i style={{ marginLeft: "5px" }} className="far fa-trash-alt" onClick={(e) => {
                           DeleteData(name, row.values);
                         }}
                       ></i>

@@ -40,16 +40,19 @@ export default function Login() {
             if (response.data.user.role_id === 1)
             {
               history.push("/dashboarduser");
+              localStorage.setItem('role_id',response.data.user.role_id);
               window.location.reload();
             }
             else if(response.data.user.role_id === 2)
             {
               history.push("/dashboard");
+              localStorage.setItem('role_id',response.data.user.role_id);
               window.location.reload();
             }
             else if(response.data.user.role_id === 3)
             {
               history.push("/dashboardadmin");
+              localStorage.setItem('role_id',response.data.user.role_id);
               window.location.reload();
             }else{console.log("User Type Invalid");}
           } else {

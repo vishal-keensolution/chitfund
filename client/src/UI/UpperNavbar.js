@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { DropdownButton } from 'react-bootstrap';
+import 'semantic-ui-css/semantic.min.css'
+import { Dropdown, Image } from 'semantic-ui-react'
+import DropdownImageTriggerExample from './DropdownImageTriggerExample'
 
 export default function Navbar() {
   const [loginStatus, setLoginStatus] = useState("");
@@ -14,7 +18,7 @@ export default function Navbar() {
         history.push("/");
         window.location.reload();
       }
-      console.log(response.data);
+    
     });
   }, []);
   const logout = () => {
@@ -26,10 +30,14 @@ export default function Navbar() {
     history.push("/");
     window.location.reload();
   };
+  const upic=localStorage.getItem('pic');
+  const userid=localStorage.getItem('userid');
+  
+ 
   return (
-    <div>
+    <div className="container-fluid">
       <nav
-        className="main-header navbar navbar-expand navbar-white navbar-light"
+        className=" navbar navbar-expand navbar-white navbar-light"
         style={{ paddingLeft: "20px" }}
       >
         {/* Left navbar links */}
@@ -54,39 +62,19 @@ export default function Navbar() {
             </ul>
           </div>
         </div>
-        <ul className="navbar-nav ml-auto">
+        
           {/* Navbar Search */}
-          <div className="row">
-            <div className="col-sm-12 col-md-4">
-              <span>Logged in as : {loginStatus}</span>
-            </div>
-            <div className="col-sm-12 col-md-4">
-              <div className="form-group">
-                <select
-                  className="form-control"
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                    history.push(e.target.value);
-                    window.location.reload();
-                  }}
-                >
-                  <option value="/Settings">Settings</option>
-                  <option value="/taxmanagement">Tax Management</option>
-                  <option value="/Notificationmanagement">Notifications</option>
-                  <option value="/Settings">Transaction Charge</option>
-                  <option value="/Platformfee">Platform Fee</option>
-                  <option value="/OtherSetting">Other Settings</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-sm-12 col-md-4">
+          
+            <ul className="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+            <li className="nav-item dropdown">
+            <DropdownImageTriggerExample/>
+            </li>
+            <li className="nav-item dropdown">
               <button type="submit" className="btn btn-danger" onClick={logout}>
                 Logout
               </button>
-            </div>
-          </div>
-        </ul>
-
+            </li>
+          </ul>
         {/* Right navbar links */}
       </nav>
     </div>

@@ -60,6 +60,8 @@ export default function DashboardAdmin() {
     await axios.get("/api/login").then((response) => {
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user.fullname);
+        localStorage.setItem('userid',response.data.user.userid);
+        localStorage.setItem('pic',response.data.user.pic);
       }
       if (response.data.loggedIn === false) {
         history.push("/");

@@ -11,6 +11,8 @@ import DashboardUser from "./UI/DashboardUser";
 import DashboardAdmin from "./UI/DashboardAdmin";
 import PlatformFee from "./UI/PlatformFee";
 import ChangePassword from "./UI/ChangePassword";
+import Bid from "./UI/User/Bid";
+import UserProfile from "./UI/UserProfile";
 function App() {
   return (
     <Router>
@@ -47,6 +49,12 @@ function App() {
         </Route>
         <Route exact path="/Calculator">
           <Calculator />
+        </Route>
+        <Route exact path="Bid">
+          <Bid />
+        </Route>
+        <Route exact path="/UserProfile">
+          <UserProfile />
         </Route>
       </Switch>
     </Router>

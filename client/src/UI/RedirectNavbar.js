@@ -28,7 +28,7 @@ export default function RedirectNavbar() {
   return (
     <div>
       <nav
-        className="main-header navbar navbar-expand navbar-white navbar-light"
+        className="navbar navbar-expand navbar-white navbar-light"
         style={{ paddingLeft: "20px" }}
       >
         {/* Left navbar links */}

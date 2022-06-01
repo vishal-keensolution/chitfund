@@ -1,2 +1,0 @@
-# chitfund
-chitfund

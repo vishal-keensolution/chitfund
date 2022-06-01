@@ -1,36 +1,35 @@
-import React, { Component } from "react";
-import { Text, View } from "react-native";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel
-} from "react-native-simple-radio-button";
+import React, { useState  } from "react";
 
 
-useEffect(() => {
-    axios.get("/api/getSchemeDataforuser", {
-        userid: userid
-      }).then((response) => {
-      if (response.data.data !== "No Data" && response.data.data.length > 0) {
-        setData(response.data.data);
-      } else {
-        setData(false);
-      }
-    });
-  }, []);
 
-var radio_props = [{ label: "10%", value: 0 }, { label: "30%", value: 1 }];
+// useEffect(() => {
+//     axios.get("/api/getSchemeDataforuser", {
+//         userid: userid
+//       }).then((response) => {
+//       if (response.data.data !== "No Data" && response.data.data.length > 0) {
+//         setData(response.data.data);
+//       } else {
+//         setData(false);
+//       }
+//     });
+//   }, []);
 
-    return (
-      <View>
-        {Object.keys(temp_data).map(num => (
-          <RadioForm
-            radio_props={radio_props}
-            initial={0}
-            onPress={value => {
-              this.setState({ value: value });
-            }}
-          />
-        ))}
-      </View>
-    );
+
+function BidSchemeCard(props) {
+  const {
+    type = 'text', 
+    name,
+  } = props;
+
+  const [value, setValue] = useState('');
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
+  return (
+    <div className="RadioButton">
+        <input id={props.id} onChange={props.changed} value={props.value} type="radio" checked={props.isSelected} />
+        <label htmlFor={props.id}>{props.label}</label>
+    </div>
+  )
+}
+export default BidSchemeCard;

@@ -8,6 +8,7 @@ import SchemeManagmentTable from "./User/SchemeManagementTable";
 import ReportTable from "./User/ReportTable";
 import GroupManagementTable from "./User/GroupManagementTable";
 import Bid from "./User/Bid";
+import UserProfile from "./UserProfile";
 import UpperNavbar from "./User/UpperNavbar";
 import Navbar from "./User/Navbar";
 
@@ -227,9 +228,18 @@ export default function DashboardUser() {
                 aria-labelledby="reports-tab"
               >
                 {/* Reports */}
-                <Bid />
+                <Bid/>
               </div>
-            </div>
+              <div
+                className="tab-pane fade"
+                id="userprofileform"
+                role="tabpanel"
+                aria-labelledby="reports-tab"
+              >
+                {/* Reports */}
+                <UserProfile/>
+              </div>
+              </div>
           </div>
           {/* /.card */}
         </div>
