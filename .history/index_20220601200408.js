@@ -27,11 +27,11 @@ app.use(
 );
 
 const CONNECTION_PARAM = {
-  host: "185.224.137.3",
-  port:"3306",
-  user: "u383096366_moneypool",
-  password: "Vish@l#2022",
-  database: "u383096366_money",
+  host: "127.0.0.1",
+  port:"3307",
+  user: "root",
+  password: "",
+  database: "chitfund",
 };
 
 app.get("/api", (req, res) => {

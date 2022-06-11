@@ -27,7 +27,7 @@ app.use(
 );
 
 const CONNECTION_PARAM = {
-  host: "185.224.137.3",
+  host: "https://auth-db147.hostinger.com/index.php?db=u383096366_money",
   port:"3306",
   user: "u383096366_moneypool",
   password: "Vish@l#2022",
